@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { TodoItem } from '../interfaces/todo-item';
+import {Injectable} from '@angular/core';
+import {TodoItem} from '../interfaces/todo-item';
 import {StorageService} from './storage.service';
 
 const todoListStorageKey = 'Todo_List';
-​
 const defaultTodoList = [
   {title: 'install NodeJS'},
   {title: 'install Angular CLI'},
@@ -14,7 +13,7 @@ const defaultTodoList = [
 ];
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodoListService {
 
@@ -36,11 +35,21 @@ export class TodoListService {
     this.todoList.push(item);
     this.saveList();
   }
+
   updateItem(item: TodoItem, changes) {
     const index = this.todoList.indexOf(item);
     this.todoList[index] = {...item, ...changes};
     this.saveList();
   }
+
+  completeItem(item: TodoItem, changes) {
+    console.log(item, changes);
+    const index = this.todoList.indexOf(item);
+    console.log(1, index);
+    this.todoList[index].completed = changes.completed;
+    this.saveList();
+  }
+
   deleteItem(item: TodoItem) {
     const index = this.todoList.indexOf(item);
     this.todoList.splice(index, 1);
